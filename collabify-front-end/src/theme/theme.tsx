@@ -46,41 +46,11 @@ export const themeOptions: ThemeOptions = {
       disabled: grey["A400"], // Darker Gray (Enhanced Legibility)
     },
   },
-  typography: {
-    fontFamily: "Roboto Mono",
-    h1: {
-      fontFamily: "Roboto",
-      fontWeight: "bold", // Bold Heading
-    },
-    h2: {
-      fontFamily: "Roboto",
-      fontWeight: "bold", // Bold Heading
-    },
-    h3: {
-      fontFamily: "Roboto",
-      fontWeight: "bold", // Bold Heading
-    },
-    h4: {
-      fontFamily: "Roboto",
-      fontWeight: "bold", // Bold Heading
-    },
-    h5: {
-      fontFamily: "Roboto",
-      fontWeight: "bold", // Bold Heading
-    },
-    h6: {
-      fontFamily: "Roboto",
-      fontWeight: "bold", // Bold Heading
-    },
-    subtitle2: {
-      fontFamily: "Roboto Mono",
-      fontWeight: "bold", // Bold Heading
-    },
-  },
   components: {
     MuiButtonBase: {
       defaultProps: {
-        disableRipple: true,
+        disableRipple: false,
+        centerRipple: true,
       },
     },
   },

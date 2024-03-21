@@ -4,8 +4,8 @@ import PlayCircleOutlineOutlinedIcon from "@mui/icons-material/PlayCircleOutline
 import StopCircleOutlinedIcon from "@mui/icons-material/StopCircleOutlined";
 import FiberManualRecordTwoToneIcon from "@mui/icons-material/FiberManualRecordTwoTone";
 
-import { blueGrey, red } from "@mui/material/colors";
-import { Typography } from "@mui/material";
+import { blueGrey, grey, red } from "@mui/material/colors";
+import { IconButton, Typography } from "@mui/material";
 
 const Container = styled("div")`
   top: 0;
@@ -20,12 +20,19 @@ const Container = styled("div")`
   color: ${blueGrey["100"]};
   gap: 5px;
 `;
-const IconWrapper = styled("div")`
-  transition: opacity 0.1s ease; /* Transition for smooth color change */
-  &:hover {
-    opacity: 0.7;
-    cursor: pointer;
-  }
+const IconWrapper = styled(IconButton)`
+  display: flex;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  box-shadow:
+    0 4px 2px 0 rgba(0, 0, 0, 0.2),
+    0 2px 4px 0 rgba(0, 0, 0, 0.19);
+
+  background: ${grey["900"]};
+
+  justify-content: center;
+  align-items: center;
 `;
 const PlayIcon = styled(PlayCircleOutlineOutlinedIcon)`
   width: 56px;

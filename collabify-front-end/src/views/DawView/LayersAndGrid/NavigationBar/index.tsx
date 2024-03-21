@@ -5,8 +5,9 @@ import React from "react";
 const Container = styled("div")`
   width: 100%;
   height: 30px;
-  background: ${grey["900"]};
-  border-bottom: 1px solid ${(props) => props.theme.palette.background.default};
+  background: ${blueGrey["800"]};
+  border-top: 1px solid ${grey["900"]};
+  border-bottom: 1px solid ${grey["900"]};
   border-right: 2px solid ${(props) => props.theme.palette.background.default};
 
   z-index: 1;

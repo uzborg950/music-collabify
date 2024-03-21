@@ -34,15 +34,11 @@ export const LayersAndGrid: React.FC<LayersAndGrid2Props> = (props) => {
           nCols={props.nCols}
         />
         <Layers gridCol={1} {...props} />
-        <TrackGrid
-          startGridRow={2}
-          startGridCol={2}
-          {...props}
-        />
+        <TrackGrid startGridRow={2} startGridCol={2} {...props} />
       </GridContainer>
       <PlayTicker
         bpm={80}
-        trackStartX={LAYERS_WIDTH}
+        trackStartX={parseInt(LAYERS_WIDTH.slice(0, -2))}
         nBeats={props.nCols}
         referenceElement={gridRef}
       />

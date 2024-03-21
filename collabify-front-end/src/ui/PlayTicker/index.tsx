@@ -6,7 +6,7 @@ type PlayTickerProps = {
   referenceElement: HTMLElement | null; //Play ticker will be shown on top of this
   bpm: number;
   nBeats: number; //i.e. number of beats on the track grid
-  trackStartX: string;
+  trackStartX: number;
 };
 
 const Line = styled("div")<{ x: number; y: number; $height: number }>`
@@ -27,12 +27,14 @@ export const PlayTicker: React.FC<PlayTickerProps> = ({
   const boundingClientRect = referenceElement.getBoundingClientRect();
 
   console.log(boundingClientRect, trackStartX);
+
+  //todo set x according to current beat in redux
   return (
     <Line
-      x={boundingClientRect.x}
+      x={boundingClientRect.x + trackStartX}
       y={boundingClientRect.y}
       $height={boundingClientRect.height}
-      id={"play-ticks"}
+      id={"play-tick"}
     />
   );
 };

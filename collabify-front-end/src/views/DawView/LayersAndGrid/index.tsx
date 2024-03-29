@@ -5,26 +5,21 @@ import { TimelineReferenceBar } from "../../../ui/TimelineReferenceBar";
 import { NavigationBar } from "./NavigationBar";
 import { Layers } from "./Layers";
 import { TrackGrid } from "../../../ui/TrackGrid";
-import { PlayTicker } from "../../../ui/PlayTicker";
+import { LAYERS_WIDTH, TRACK_GRID_CELL_WIDTH } from "./constants";
+import { MainPlayTicker } from "./MainPlayTicker";
 
-const TRACK_GRID_CELL_WIDTH = "50px";
-const LAYERS_WIDTH = "400px";
 const GridContainer = styled("div")<{ nCols: number; nRows: number }>`
   display: grid;
   grid-template-columns: ${LAYERS_WIDTH} repeat(
       ${(props) => props.nCols},
       ${TRACK_GRID_CELL_WIDTH}
-    ); //
+    ); 
   grid-template-rows: 30px repeat(${(props) => props.nRows}, 120px);
   overflow: auto;
 `;
 type LayersAndGrid2Props = {} & TimelineGridProps;
 export const LayersAndGrid: React.FC<LayersAndGrid2Props> = (props) => {
-  // const [firstTrackGridCellRef, setFirstTrackGridCellRef] =
-  //   useState<HTMLDivElement | null>(null);
-
   const [gridRef, setGridRef] = useState<HTMLDivElement | null>(null);
-
   return (
     <>
       <GridContainer nCols={props.nCols} nRows={props.nRows} ref={setGridRef}>
@@ -35,13 +30,8 @@ export const LayersAndGrid: React.FC<LayersAndGrid2Props> = (props) => {
         />
         <Layers gridCol={1} {...props} />
         <TrackGrid startGridRow={2} startGridCol={2} {...props} />
+        <MainPlayTicker nCols={props.nCols} bpm={props.bpm} gridRef={gridRef} />
       </GridContainer>
-      <PlayTicker
-        bpm={80}
-        trackStartX={parseInt(LAYERS_WIDTH.slice(0, -2))}
-        nBeats={props.nCols}
-        referenceElement={gridRef}
-      />
     </>
   );
 };

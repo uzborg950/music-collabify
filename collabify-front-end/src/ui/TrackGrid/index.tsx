@@ -2,12 +2,16 @@ import React from "react";
 import { styled } from "@mui/system";
 import { blueGrey } from "@mui/material/colors";
 import { TimelineGridProps } from "../../views/DawView/LayersAndGrid/types";
+import { useAppSelector } from "../../redux/hooks";
+import { Subdivisions } from "./Subdivisions";
 
 type TrackGridProps = {
   startGridRow: number;
   startGridCol: number;
 } & TimelineGridProps;
 
+//todo change this to use static classes for performance
+//todo also change the subdivision classes to static classes
 const GridCell = styled("div")<{
   isBar: boolean;
   isFirstColumn: boolean;
@@ -21,9 +25,6 @@ const GridCell = styled("div")<{
   border-bottom: 1px solid ${(props) => props.theme.palette.background.default};
   background: ${blueGrey["400"]};
 
-  // &:hover{
-  //   background: ${blueGrey["700"]};
-  // }
   ${(props) =>
     props.isBar
       ? `border-right: 2px solid ${props.theme.palette.background.default}`
@@ -57,7 +58,11 @@ export const TrackGrid: React.FC<TrackGridProps> = ({
           isBar={(index + 1) % beatsPerBar === 0}
           isFirstColumn={index % nCols === 0}
           isLastColumn={(index + 1) % nCols === 0}
-        />
+        >
+          <Subdivisions
+            beatIndex={index % nCols}
+          />
+        </GridCell>
       ))}
     </>
   );

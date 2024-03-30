@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { PlaybackBar } from "./PlaybackBar";
 import { blueGrey } from "@mui/material/colors";
 import { LayersAndGrid } from "./LayersAndGrid";
-import { TimelineGridProps } from "./LayersAndGrid/types";
 import { PlayEngine } from "./PlayEngine";
 
 const VerticalFlexLayout = styled.div`
@@ -14,18 +13,11 @@ const VerticalFlexLayout = styled.div`
   background: ${blueGrey["900"]};
 `;
 
-const initTimeline: TimelineGridProps = {
-  nRows: 20,
-  nCols: 200,
-  beatsPerBar: 4,
-  bpm: 80,
-};
-
 export const DawView: React.FC = () => {
   return (
     <VerticalFlexLayout>
       <PlaybackBar />
-      <LayersAndGrid {...initTimeline} />
+      <LayersAndGrid />
       <PlayEngine />
     </VerticalFlexLayout>
   );

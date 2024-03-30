@@ -10,7 +10,7 @@ const Container = styled("div")`
   border-bottom: 1px solid ${grey["900"]};
   border-right: 2px solid ${(props) => props.theme.palette.background.default};
 
-  z-index: 1;
+  z-index: 4; //See collabify-front-end/reference/zIndexGrid.md
   position: sticky;
   top: 0;
   left: 0;

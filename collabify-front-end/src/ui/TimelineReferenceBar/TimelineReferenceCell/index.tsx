@@ -16,11 +16,12 @@ const Container = styled("div")`
   border-top: 1px solid ${grey["900"]};
   border-bottom: 1px solid ${grey["900"]};
   align-items: center;
+  z-index: 2; //See collabify-front-end/reference/zIndexGrid.md
 `;
 
 type TimelineReferenceCellProps = {
   index: number;
-} & Pick<TimelineGridProps, "nCols" | "beatsPerBar">;
+} & Pick<TimelineGridProps, "beatsPerBar">;
 export const TimelineReferenceCell: React.FC<TimelineReferenceCellProps> = (
   props,
 ) => {

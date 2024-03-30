@@ -1,59 +1,53 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { styled } from "@mui/system";
-import { green } from "@mui/material/colors";
+import {green, orange} from "@mui/material/colors";
 
 type PlayTickerProps = {
-  referenceElement: HTMLElement | null; //Play ticker will be shown on top of this
-  bpm: number;
-  nBeats: number; //i.e. number of beats on the track grid
+  backgroundElementRef: HTMLElement | null; //Play ticker will be shown on top of this
+  startLocationDivRef: HTMLDivElement | null; //ref marks the start of where the ticker should start playing
   offsetX: number; //how much offsetX from the left of referenceElement
+  nRows: number;
+  zIndex: number;
 };
 
-// const moveRight = ({ tillPx }: { tillPx: number }) => {
-//   return keyframes`
-//   from {
-//     transform: translateX(0);
-//   }
-//   to {
-//     transform: translateX(${tillPx}px);
-//   }
-// `;
-// };
-//   animation: ${({ isMoving, $refWidth }) =>
-//     isMoving
-//       ? css`
-//           ${moveRight({ tillPx: $refWidth })} 5s linear infinite
-//         `
-//       : null};
 const Line = styled("div")<{
-  x: number;
-  y: number;
-  $refHeight: number;
-  $refWidth: number;
+  $x: number;
+  $height: number;
 }>`
   position: absolute;
-  left: ${(props) => props.x}px;
-  top: ${(props) => props.y}px;
+  left: ${(props) => props.$x}px;
+
+  top: -${(props) => props.$height}px; //default top is at the bottom of the trackgrid due to relative positioning. The negative top puts the line at the first cell
+
   width: 2px;
-  height: ${(props) => props.$refHeight}px;
-  background: ${green["A700"]};
+  height: ${(props) => props.$height}px;
+  background: ${green["A100"]};
+
+  box-shadow: -10px 0px 30px 1px ${green["A200"]};
 `;
-export const PlayTicker: React.FC<PlayTickerProps> = ({
-  referenceElement,
-  bpm,
-  nBeats,
-  offsetX,
-}) => {
-  if (!referenceElement) return null;
-  const boundingClientRect = referenceElement.getBoundingClientRect();
-  //todo set x according to current beat in redux
-  return (
-    <Line
-      x={boundingClientRect.x + offsetX}
-      y={boundingClientRect.y}
-      $refWidth={boundingClientRect.width}
-      $refHeight={boundingClientRect.height}
-      id={"play-tick"}
-    />
-  );
-};
+
+const Container = styled("div")<{ zIndex: number }>`
+  position: relative;
+  z-index: ${(props) => props.zIndex};
+`;
+export const PlayTicker = forwardRef<HTMLDivElement | null, PlayTickerProps>(
+  (
+    { backgroundElementRef, offsetX, startLocationDivRef, nRows, zIndex },
+    ref,
+  ) => {
+    if (!startLocationDivRef || !backgroundElementRef) return null;
+    const startLocationRect = startLocationDivRef.getBoundingClientRect(); //warning: non-reactive
+    const bgElementRect = backgroundElementRef.getBoundingClientRect(); //warning: non-reactive
+    //todo set x according to current beat in redux
+    return (
+      <Container zIndex={zIndex}>
+        <Line
+          ref={ref}
+          $x={bgElementRect.x + offsetX}
+          $height={startLocationRect.height * nRows} //this is programmatically finding height of the track grid
+          id={"play-tick"}
+        />
+      </Container>
+    );
+  },
+);

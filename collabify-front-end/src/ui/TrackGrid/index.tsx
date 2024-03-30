@@ -1,14 +1,16 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { blueGrey } from "@mui/material/colors";
-import { TimelineGridProps } from "../../views/DawView/LayersAndGrid/types";
 import { useAppSelector } from "../../redux/hooks";
 import { Subdivisions } from "./Subdivisions";
 
+type ExtraTrackGridProps = {
+  setZeroethTrackGridCellRef: (element: HTMLDivElement | null) => void;
+};
 type TrackGridProps = {
   startGridRow: number;
   startGridCol: number;
-} & TimelineGridProps;
+} & ExtraTrackGridProps;
 
 //todo change this to use static classes for performance
 //todo also change the subdivision classes to static classes
@@ -24,6 +26,7 @@ const GridCell = styled("div")<{
   border-top: 1px solid ${(props) => props.theme.palette.background.default};
   border-bottom: 1px solid ${(props) => props.theme.palette.background.default};
   background: ${blueGrey["400"]};
+  z-index: 0; //See collabify-front-end/reference/zIndexGrid.md
 
   ${(props) =>
     props.isBar
@@ -39,18 +42,19 @@ const GridCell = styled("div")<{
       : ""};
 `;
 export const TrackGrid: React.FC<TrackGridProps> = ({
-  nRows,
-  nCols,
-  beatsPerBar,
   startGridRow,
   startGridCol,
+  setZeroethTrackGridCellRef,
 }) => {
   // growOnBoundary will make the grid to widen when an object is placed there
-
+  const nCols = useAppSelector((state) => state.playback.nBeats);
+  const nRows = useAppSelector((state) => state.playback.nLayers);
+  const beatsPerBar = useAppSelector((state) => state.playback.beatsPerBar);
   return (
     <>
       {[...Array(nRows * nCols)].map((_, index) => (
         <GridCell
+          ref={index === 0 ? setZeroethTrackGridCellRef : null}
           key={index}
           id={`grid-cell-row${index / nCols}-col${index % nCols}`}
           row={Math.floor(index / nCols) + startGridRow}
@@ -59,9 +63,7 @@ export const TrackGrid: React.FC<TrackGridProps> = ({
           isFirstColumn={index % nCols === 0}
           isLastColumn={(index + 1) % nCols === 0}
         >
-          <Subdivisions
-            beatIndex={index % nCols}
-          />
+          <Subdivisions beatIndex={index % nCols} />
         </GridCell>
       ))}
     </>

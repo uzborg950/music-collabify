@@ -2,7 +2,6 @@ import React from "react";
 import { styled } from "@mui/system";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { blueGrey } from "@mui/material/colors";
-import { Select, Typography } from "@mui/material";
 import {
   onPlayClicked,
   onStopClicked,
@@ -11,6 +10,7 @@ import { IconWrapper } from "./common";
 import { PlayIcon, RecordIcon, StopIcon } from "./playbackButtons";
 import { PlaybackScreen } from "./PlaybackScreen";
 import { SubdivisionSelect } from "./SubdivisionSelect";
+import { BpmInput } from "./BpmInput";
 
 const Container = styled("div")`
   display: flex;
@@ -42,6 +42,9 @@ export const PlaybackBar: React.FC = () => {
   const dispatch = useAppDispatch();
   return (
     <Container>
+      <GroupContainer>
+        <BpmInput />
+      </GroupContainer>
       <GroupContainer>
         <CenterContainer>
           <IconWrapper

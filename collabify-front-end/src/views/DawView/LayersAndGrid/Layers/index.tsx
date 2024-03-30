@@ -1,9 +1,9 @@
 import { styled } from "@mui/system";
-import { TimelineGridProps } from "../types";
 import React from "react";
 import { grey } from "@mui/material/colors";
 import { Topbar } from "./Topbar";
 import { LayerControls } from "./LayerControls";
+import { useAppSelector } from "../../../../redux/hooks";
 
 const LayerContainer = styled("div")<{ gridCol: number }>`
   display: flex;
@@ -19,6 +19,7 @@ const LayerContainer = styled("div")<{ gridCol: number }>`
   gap: 8px;
 
   border-radius: 5px;
+  z-index: 3;
 `;
 
 type LayerProps = {
@@ -37,13 +38,15 @@ export const Layer: React.FC<LayerProps> = (props) => {
     </LayerContainer>
   );
 };
-type LayersProps = { gridCol: number } & TimelineGridProps;
+type LayersProps = { gridCol: number };
 export const Layers: React.FC<LayersProps> = (props) => {
   //todo Load layers data, nRows should be equal to number of layers
   //if not then add an error
+  const nRows = useAppSelector((state) => state.playback.nLayers);
+
   return (
     <>
-      {[...Array(props.nRows)].map((_, index) => (
+      {[...Array(nRows)].map((_, index) => (
         <Layer index={index} {...props} />
       ))}
     </>

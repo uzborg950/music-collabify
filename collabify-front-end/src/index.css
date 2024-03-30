@@ -3,13 +3,13 @@
 }
 ::-webkit-scrollbar {
     background: transparent;
-    height: 8px;
-    width: 8px;
+    height: 12px;
+    width: 12px;
 }
 ::-webkit-scrollbar-thumb {
     border-radius: 0.25rem;
     background: #757575;
 }
 ::-webkit-scrollbar-track {
-    background: #ffffff;
+    background: rgb(255, 255, 255);
 }

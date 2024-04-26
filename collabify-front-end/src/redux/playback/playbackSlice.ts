@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type PlaybackState = {
   currentBeat: number;
+  seekedBeat: number; //redundant but needed to force stop requestAnimationFrame
   isPlaying: boolean;
   subdivisionsPerBeat: number;
   nBeats: number; //columns
@@ -12,6 +13,7 @@ type PlaybackState = {
 
 const initialState: PlaybackState = {
   currentBeat: 0,
+  seekedBeat: 0,
   isPlaying: false,
   subdivisionsPerBeat: 4,
   nBeats: 200,
@@ -34,7 +36,7 @@ const playbackSlice = createSlice({
       }
     },
     seekTimeline: (state, action: PayloadAction<number>) => {
-      state.currentBeat = action.payload;
+      state.seekedBeat = action.payload;
     },
     changeSubdivisionsPerBeat: (state, action: PayloadAction<number>) => {
       state.subdivisionsPerBeat = action.payload;
@@ -44,6 +46,9 @@ const playbackSlice = createSlice({
     },
     resetCurrentBeat: (state) => {
       state.currentBeat = 0;
+    },
+    setCurrentBeat: (state, action: PayloadAction<number>) => {
+      state.currentBeat = action.payload;
     },
     increaseCurrentBeat: (state, action: PayloadAction<number>) => {
       state.currentBeat += action.payload;
@@ -71,5 +76,6 @@ export const {
   seekTimeline,
   increaseCurrentBeat,
   resetCurrentBeat,
+  setCurrentBeat,
 } = playbackSlice.actions;
 export default playbackSlice.reducer;

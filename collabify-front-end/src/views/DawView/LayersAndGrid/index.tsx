@@ -7,6 +7,7 @@ import { TrackGrid } from "../../../ui/TrackGrid";
 import { LAYERS_WIDTH, TRACK_GRID_CELL_WIDTH } from "./constants";
 import { MainPlayTicker } from "./MainPlayTicker";
 import { useAppSelector } from "../../../redux/hooks";
+import { Tracks } from "./Tracks";
 
 const GridContainer = styled("div")<{ nCols: number; nRows: number }>`
   display: grid;
@@ -36,6 +37,10 @@ export const LayersAndGrid: React.FC<LayersAndGrid2Props> = (props) => {
           setZeroethTrackGridCellRef={setZeroethTrackGridCellRef}
         />
         <MainPlayTicker
+          gridRef={gridRef}
+          startLocationDivRef={zeroethTrackGridCellRef}
+        />
+        <Tracks
           gridRef={gridRef}
           startLocationDivRef={zeroethTrackGridCellRef}
         />

@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 import { blueGrey } from "@mui/material/colors";
 import { useAppSelector } from "../../redux/hooks";
 import { Subdivisions } from "./Subdivisions";
+import { Track } from "../Track";
 
 type ExtraTrackGridProps = {
   setZeroethTrackGridCellRef: (element: HTMLDivElement | null) => void;

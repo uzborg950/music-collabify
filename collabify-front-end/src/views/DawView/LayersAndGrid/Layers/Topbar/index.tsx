@@ -17,13 +17,13 @@ const TopbarContainer = styled("div")`
 
 const TextContainer = styled("div")``;
 const TopbarRightButtonContainer = styled(ControlButtonBaseContainer)<{
-  isOn: boolean;
+  $active: boolean;
   $color: string;
 }>`
   justify-self: flex-end;
 
-  color: ${(props) => (props.isOn ? blueGrey[900] : props.$color)};
-  background: ${(props) => (props.isOn ? props.$color : blueGrey[900])};
+  color: ${(props) => (props.$active ? blueGrey[900] : props.$color)};
+  background: ${(props) => (props.$active ? props.$color : blueGrey[900])};
 `;
 const RecordButton = styled(FiberManualRecordTwoToneIcon)``;
 
@@ -46,7 +46,7 @@ export const Topbar: React.FC<TopbarProps> = ({ name, onRecordClick }) => {
           setRecordingActive((state) => !state);
           onRecordClick();
         }}
-        isOn={recordingActive}
+        $active={recordingActive}
         $color={red["500"]}
       >
         <RecordButton />

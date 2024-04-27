@@ -6,6 +6,7 @@ import { TrackData } from "../../views/DawView/LayersAndGrid/Tracks/types";
 import WaveSurfer from "wavesurfer.js";
 import { useWavesurfer } from "@wavesurfer/react";
 import { useAppSelector } from "../../redux/hooks";
+import { useSyncedWavesurfer } from "../../external/wavesurfer/useSyncedWavesurfer";
 
 const RelativeContainer = styled("div")<{ $zIndex?: number }>`
   position: relative;
@@ -58,62 +59,27 @@ type TrackStyleProps = {
   zIndex?: number;
 };
 
+/*
+Todo - This has way too many states for complex cause-effects. Think of a way to compress all this. State/event driven architecture (automata)?
+Is that even possible in react?
+ */
 export const Track: React.FC<TrackProps> = ({
   top,
   left,
   height,
   width,
-  zIndex,
   trackData,
 }) => {
-  const isPlaying = useAppSelector((state) => state.playback.isPlaying);
-  const waveformContainer = useRef<HTMLDivElement | null>(null);
-  const currentBeat = useAppSelector((state) => state.playback.currentBeat);
-  // const [wavesurferInst, setWavesurferInst] = useState<WaveSurfer | null>(null);
-  // console.log(top, trackData.title, trackData.layerIndex);
-  const {
-    wavesurfer,
-    isPlaying: isWavesurferPlaying,
-    currentTime,
-  } = useWavesurfer({
-    container: waveformContainer,
-    height: "auto",
-    waveColor: grey["A100"],
+  const { waveformContainer } = useSyncedWavesurfer({
+    audioUri: trackData.audioUri,
+    startBeat: trackData.startBeat,
+    endBeat: trackData.endBeat,
     progressColor: grey["A400"],
-    url: trackData.audioUri,
-    // plugins: useMemo(() => [Timeline.create()], []),
+    waveColor: grey["A100"],
   });
 
-  useEffect(() => {
-    /*
-    Controls play/stop of the wavesurfer player
-     */
-    if (
-      isPlaying &&
-      !isWavesurferPlaying &&
-      currentBeat >= trackData.startBeat &&
-      currentBeat < trackData.endBeat
-    ) {
-      // console.log("playing wavesurfer");
-      wavesurfer?.play();
-    } else if (currentBeat > trackData.endBeat) wavesurfer?.stop();
-  }, [currentBeat, isPlaying, isWavesurferPlaying, trackData, wavesurfer]);
-
-  useEffect(() => {
-    if (!isPlaying && isWavesurferPlaying) {
-      // console.log("pausing");
-      wavesurfer?.pause();
-    } else if (!isPlaying && currentBeat === 0) {
-      // console.log("stopping");
-      wavesurfer?.stop();
-    }
-  }, [isPlaying, isWavesurferPlaying, currentBeat, wavesurfer]);
-
-  // console.log(trackData.layerIndex, waveformContainer);
   return (
-    // <RelativeContainer $zIndex={zIndex} id={`track-${trackData.title}`}>
     <AbsoluteContainer
-      // ref={waveformContainer}
       $bgColor={trackData.bgColor}
       $height={height}
       $width={width}
@@ -123,6 +89,5 @@ export const Track: React.FC<TrackProps> = ({
       <Background $bgColor={trackData.bgColor} />
       <WaveformContainer ref={waveformContainer} />
     </AbsoluteContainer>
-    // </RelativeContainer>
   );
 };

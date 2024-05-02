@@ -79,13 +79,10 @@ export const Tracks: React.FC<TracksProps> = ({
      */
     const maxBeats = tracksData.reduce((maxBeat, trackData) => {
       const beats = secondsToBeats({ bpm, seconds: trackData.length });
-      console.log(beats);
       if (trackData.startBeat + beats > maxBeat)
         return trackData.startBeat + beats;
       return maxBeat;
     }, 0);
-
-    console.log(maxBeats, nBeats);
 
     if (maxBeats > nBeats) {
       dispatch(setNumBeats(maxBeats + (maxBeats % 4) + 16)); //resize to size of track of max length + remaining beats to complete the bar + 2 bars extra

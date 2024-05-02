@@ -2,6 +2,10 @@
 Provide wavesurfer functionality + states
 Handle all syncing of internal states and wavesurfer states here.
 There is not very good dependency inversion here and could be later improved.
+
+Todo - This has way too many states for complex cause-effects. Think of a way to compress all this. State/event driven architecture (automata)?
+Is that even possible in react?
+
  */
 import { useAppSelector } from "../../redux/hooks";
 import { useEffect, useRef } from "react";
@@ -39,16 +43,15 @@ export const useSyncedWavesurfer = (props: WaveSurferProviderProps) => {
     Controls play/stop of the wavesurfer player
      */
     if (
+      //not need to check isWavesurferReady because wavesurfer can actually correctly play without it being ready (wtf i know). This is not the same as the stop() method which throws an error when isReady is false. The isReady attribute might be buggy within wavesurfer
       isInternalPlaying &&
       !isWavesurferPlaying &&
-      isWavesurferReady &&
       currentBeat >= props.startBeat &&
       currentBeat < props.endBeat
     ) {
       wavesurfer?.play();
     } else if (currentBeat > props.endBeat) wavesurfer?.stop();
   }, [
-    isWavesurferReady,
     currentBeat,
     isWavesurferPlaying,
     props.endBeat,
@@ -60,10 +63,14 @@ export const useSyncedWavesurfer = (props: WaveSurferProviderProps) => {
   useEffect(() => {
     if (!isInternalPlaying && isWavesurferActuallyPlaying) {
       wavesurfer?.pause();
-    } else if (!isInternalPlaying && currentBeat === 0) {
+    } else if (
+      !isInternalPlaying &&
+      currentBeat === 0 &&
+      isWavesurferReady //if it wasn't ready, then this will throw an error
+    ) {
       wavesurfer?.stop();
     }
-  }, [isInternalPlaying, isWavesurferActuallyPlaying, currentBeat, wavesurfer]);
+  }, [isInternalPlaying, isWavesurferReady, currentBeat, wavesurfer]);
 
   return { waveformContainer };
 };

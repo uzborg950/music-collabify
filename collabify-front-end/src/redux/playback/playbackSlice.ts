@@ -41,6 +41,9 @@ const playbackSlice = createSlice({
     changeSubdivisionsPerBeat: (state, action: PayloadAction<number>) => {
       state.subdivisionsPerBeat = action.payload;
     },
+    setNumBeats: (state, action: PayloadAction<number>) => {
+      state.nBeats = action.payload;
+    },
     setBpm: (state, action: PayloadAction<number>) => {
       state.bpm = action.payload;
     },
@@ -77,5 +80,6 @@ export const {
   increaseCurrentBeat,
   resetCurrentBeat,
   setCurrentBeat,
+  setNumBeats,
 } = playbackSlice.actions;
 export default playbackSlice.reducer;

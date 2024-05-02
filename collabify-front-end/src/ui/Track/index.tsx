@@ -1,17 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React from "react";
 import { styled } from "@mui/system";
 import { blueGrey, grey } from "@mui/material/colors";
 import { PositionProps } from "../types";
-import { TrackData } from "../../views/DawView/LayersAndGrid/Tracks/types";
-import WaveSurfer from "wavesurfer.js";
-import { useWavesurfer } from "@wavesurfer/react";
-import { useAppSelector } from "../../redux/hooks";
 import { useSyncedWavesurfer } from "../../external/wavesurfer/useSyncedWavesurfer";
+import { TrackData, TrackFile } from "../../views/DawView/types/trackTypes";
 
-const RelativeContainer = styled("div")<{ $zIndex?: number }>`
-  position: relative;
-  z-index: ${(props) => props.$zIndex};
-`;
 const AbsoluteContainer = styled("div")<{
   $bgColor?: string;
   $color?: string;
@@ -51,27 +44,24 @@ const Background = styled("div")<{
   height: 100%;
   width: 100%;
 `;
-export type TrackProps = {
-  trackData: TrackData;
+export type TrackPresentation = {
+  trackData: TrackData & { endBeat: number }; //because at this point, endBeat should have been calculated. When we have a separate TrackFile implementation, we can move the endBeat calculation there. Right now, pass it from outside
 } & TrackStyleProps &
   PositionProps & { width: number };
 type TrackStyleProps = {
   zIndex?: number;
 };
 
-/*
-Todo - This has way too many states for complex cause-effects. Think of a way to compress all this. State/event driven architecture (automata)?
-Is that even possible in react?
- */
-export const Track: React.FC<TrackProps> = ({
+export const Track: React.FC<TrackPresentation> = ({
   top,
   left,
   height,
   width,
   trackData,
 }) => {
+  //todo we need a factory for trackSynth and trackFile eventually. Then this Track will become truly dumb as only the TrackFile implementation will contain wavesurfer
   const { waveformContainer } = useSyncedWavesurfer({
-    audioUri: trackData.audioUri,
+    audioUri: (trackData as TrackFile).audioUri,
     startBeat: trackData.startBeat,
     endBeat: trackData.endBeat,
     progressColor: grey["A400"],

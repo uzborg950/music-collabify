@@ -11,12 +11,7 @@ export const MainPlayTicker: React.FC<MainPlayTickerProps> = ({
 }) => {
   const nRows = useAppSelector((state) => state.playback.nLayers);
   const currentBeat = useAppSelector((state) => state.playback.currentBeat);
-  const isPlaying = useAppSelector((state) => state.playback.isPlaying);
-  const bpm = useAppSelector((state) => state.playback.bpm);
-  const [requestAnimationId, setRequestAnimationId] = useState<number>();
-  const [left, setLeft] = useState<number>(
-    (gridRef?.getBoundingClientRect()?.x ?? 0) + getLayersWidth(),
-  );
+
   const playTickerRef = useRef<HTMLDivElement | null>(null);
 
   // todo  decide best way to use scroll into view to ensure heplful scoping + no disturbance for user
@@ -37,7 +32,8 @@ export const MainPlayTicker: React.FC<MainPlayTickerProps> = ({
   const startLocationRect = startLocationDivRef.getBoundingClientRect(); //warning: non-reactive
   const gridRect = gridRef.getBoundingClientRect(); //warning: non-reactive
 
-  const currentLeft = gridRect.x + getLayersWidth() + currentBeat * getTrackGridCellWidth();
+  const currentLeft =
+    gridRect.x + getLayersWidth() + currentBeat * getTrackGridCellWidth();
   const height = startLocationRect.height * nRows;
   const top = -height; //default top is at the bottom of the trackgrid due to relative positioning. The negative top puts the line at the first cell
   return (

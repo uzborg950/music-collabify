@@ -32,9 +32,8 @@ const RenderTrack: React.FC<RenderTrackProps> = (props) => {
     getLayersWidth() +
     props.trackData.startBeat * getTrackGridCellWidth();
 
-  const width =
-    secondsToBeats({ bpm, seconds: trackFileData.length }) *
-    getTrackGridCellWidth();
+  const trackBeats = secondsToBeats({ bpm, seconds: trackFileData.length });
+  const width = trackBeats * getTrackGridCellWidth();
 
   const deltaYFromRelativeContainerToLayer =
     (nRows - props.trackData.layerIndex) * props.startLocationRect.height;
@@ -43,9 +42,9 @@ const RenderTrack: React.FC<RenderTrackProps> = (props) => {
   const trackPresentationData = useMemo(
     () => ({
       ...props.trackData,
-      endBeat: 204, //convert track file length to endBeat here. Suppose we say 1 beat per second
+      endBeat: props.trackData.startBeat + trackBeats, //convert track file length to endBeat here. Suppose we say 1 beat per second
     }),
-    [props.trackData],
+    [props.trackData, trackBeats],
   );
   return (
     <Track

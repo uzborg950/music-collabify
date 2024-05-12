@@ -46,7 +46,6 @@ export const PlayEngine = () => {
   const requestAnimationIdRef = useRef<number | undefined>(); //setting a ref so each RAF does not trigger a render
   const currentBeat = useAppSelector((state) => state.playback.currentBeat);
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     /*
     To stop playing by stopping the existing RAF

@@ -24,3 +24,5 @@ export type TrackPosition = {
 };
 export type TrackBase = TrackStyle & Partial<TrackEdit> & TrackPosition;
 export type TrackData = TrackBase & (TrackFile | TrackSynth);
+
+export type TrackFileData = TrackBase & TrackFile;

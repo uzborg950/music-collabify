@@ -4,7 +4,6 @@ import React from "react";
 
 const Container = styled("div")`
   width: 100%;
-  height: 30px;
   background: ${blueGrey["800"]};
   border-top: 1px solid ${grey["900"]};
   border-bottom: 1px solid ${grey["900"]};

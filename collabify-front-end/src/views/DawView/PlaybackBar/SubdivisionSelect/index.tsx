@@ -35,6 +35,7 @@ export const SubdivisionSelect: React.FC = () => {
           <MenuItem value={9}>9</MenuItem>
           <MenuItem value={12}>12</MenuItem>
           <MenuItem value={16}>16</MenuItem>
+          <MenuItem value={32}>32</MenuItem>
         </Select>
       </FormControl>
     </Box>

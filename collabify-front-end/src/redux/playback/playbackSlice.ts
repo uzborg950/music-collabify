@@ -15,7 +15,7 @@ const initialState: PlaybackState = {
   currentBeat: 0,
   seekedBeat: 0,
   isPlaying: false,
-  subdivisionsPerBeat: 4,
+  subdivisionsPerBeat: 16,
   nBeats: 200,
   nLayers: 20,
   beatsPerBar: 4,

@@ -6,3 +6,17 @@ export type PositionProps = {
   top: number;
   height: number;
 };
+
+
+
+export type BeatSizeProps = {
+  beatWidth: number; //in pixels to represent one beat
+};
+
+export type BeatInitProps = { nBeats: number; beatsPerBar: number } & BeatSizeProps;
+
+export type CSSGridProps = {
+  startRow: number;
+  startCol: number;
+};
+

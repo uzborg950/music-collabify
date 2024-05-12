@@ -1,6 +1,6 @@
-import {TrackBase, TrackData, TrackFile} from "../views/DawView/types/trackTypes";
+import { TrackFileData } from "../views/DawView/types/trackTypes";
 
-export const LOCAL_TRACKS_DATA: (TrackBase & TrackFile)[] = [
+export const LOCAL_TRACKS_DATA: TrackFileData[] = [
   {
     type: "file",
     startBeat: 0,

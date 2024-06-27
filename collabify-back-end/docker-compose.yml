@@ -1,0 +1,23 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3100:3000"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/collabifydb"
+      SERVER_PORT: 3000
+      LOCAL_TRACK_UPLOAD_PATH: "playlist-uploads"
+    volumes:
+      - "./src:/app/src"
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

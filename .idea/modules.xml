@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/music-collabify.iml" filepath="$PROJECT_DIR$/.idea/music-collabify.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../partyKit-test/.idea/partyKit-test.iml" filepath="$PROJECT_DIR$/../partyKit-test/.idea/partyKit-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../partykit-test-react/.idea/partykit-test-react.iml" filepath="$PROJECT_DIR$/../partykit-test-react/.idea/partykit-test-react.iml" />
     </modules>
   </component>
 </project>

@@ -6,5 +6,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="partyKit-test" />
+    <orderEntry type="module" module-name="partykit-test-react" />
   </component>
 </module>

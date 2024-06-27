@@ -40,7 +40,7 @@ This is responsible for maintaining currentBeat while playing is active
 showing play ticker currentBeat and separate debounced one for showing actual beat?
  */
 export const PlayEngine = () => {
-  const isPlaying = useAppSelector((state) => state.playback.isPlaying);
+  const isPlaying = useAppSelector((state) => state.playback.isPlaying); //todo replace with playstate
   const bpm = useAppSelector((state) => state.playback.bpm);
   const seekedBeat = useAppSelector((state) => state.playback.seekedBeat);
   const requestAnimationIdRef = useRef<number | undefined>(); //setting a ref so each RAF does not trigger a render

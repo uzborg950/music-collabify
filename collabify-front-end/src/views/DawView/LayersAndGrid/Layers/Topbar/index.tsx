@@ -7,6 +7,7 @@ import {
   ControlButtonBaseContainer,
   ControlButtonIconContainer,
 } from "../common";
+import { StopCircleTwoTone } from "@mui/icons-material";
 
 const TopbarContainer = styled("div")`
   display: flex;
@@ -24,33 +25,74 @@ const TopbarRightButtonContainer = styled(ControlButtonBaseContainer)<{
 
   color: ${(props) => (props.$active ? blueGrey[900] : props.$color)};
   background: ${(props) => (props.$active ? props.$color : blueGrey[900])};
+  animation: ${(props) => (props.$active ? "pulse 1s infinite ease" : "unset")};
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `;
 const RecordButton = styled(FiberManualRecordTwoToneIcon)``;
-
+const StopButton = styled(StopCircleTwoTone)``;
 type TopbarProps = {
   name: string; //todo could be passed via context, list of layer objects referenced with index
-  onRecordClick: () => void; //todo pass via context
+} & RecordProps;
+type RecordProps = {
+  layerIndex: number;
+  onRecordClick: () => void;
+  onRecordStopClick: () => void;
+  recordingState: { isActive: boolean; activeLayerIndex?: number };
 };
+const RecordOrStop: React.FC<RecordProps> = ({
+  onRecordClick,
+  recordingState,
+  layerIndex,
+  onRecordStopClick,
+}) => {
+  if (recordingState.isActive && recordingState.activeLayerIndex === layerIndex)
+    return (
+      <TopbarRightButtonContainer
+        onClick={onRecordStopClick}
+        $active={true}
+        $color={red["500"]}
+      >
+        <StopButton />
+      </TopbarRightButtonContainer>
+    );
 
-export const Topbar: React.FC<TopbarProps> = ({ name, onRecordClick }) => {
-  const [recordingActive, setRecordingActive] = useState<boolean>(false);
+  return (
+    <TopbarRightButtonContainer
+      onClick={onRecordClick}
+      $disabled={
+        recordingState.isActive &&
+        recordingState.activeLayerIndex !== layerIndex
+      }
+      $active={
+        recordingState.isActive &&
+        recordingState.activeLayerIndex === layerIndex
+      }
+      $color={red["500"]}
+    >
+      <RecordButton />
+    </TopbarRightButtonContainer>
+  );
+};
+export const Topbar: React.FC<TopbarProps> = (props) => {
   return (
     <TopbarContainer>
       <TextContainer>
         <Typography variant={"h5"} fontWeight={"bold"} color={"text.secondary"}>
-          {name}
+          {props.name}
         </Typography>
       </TextContainer>
-      <TopbarRightButtonContainer
-        onClick={() => {
-          setRecordingActive((state) => !state);
-          onRecordClick();
-        }}
-        $active={recordingActive}
-        $color={red["500"]}
-      >
-        <RecordButton />
-      </TopbarRightButtonContainer>
+      <RecordOrStop {...props} />
     </TopbarContainer>
   );
 };

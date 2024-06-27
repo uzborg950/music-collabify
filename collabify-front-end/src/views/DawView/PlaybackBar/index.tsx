@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "@mui/system";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { blueGrey } from "@mui/material/colors";
@@ -11,7 +11,7 @@ import { PlayIcon, RecordIcon, StopIcon } from "./playbackButtons";
 import { PlaybackScreen } from "./PlaybackScreen";
 import { SubdivisionSelect } from "./SubdivisionSelect";
 import { BpmInput } from "./BpmInput";
-
+import * as Tone from "tone";
 const Container = styled("div")`
   display: flex;
   flex-direction: row;
@@ -39,7 +39,25 @@ const GroupContainer = styled("div")`
 `;
 export const PlaybackBar: React.FC = () => {
   const isPlaying = useAppSelector((state) => state.playback.isPlaying);
+  const playState = useAppSelector((state) => state.playback.playState);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    /*
+        @deprecated: todo remove this Effect and move transport code to a dedicated toneJs manager hook.
+    */
+    switch (playState) {
+      case "playing":
+        Tone.getTransport().start();
+        return;
+      case "paused":
+        Tone.getTransport().pause();
+        return;
+      case "stopped":
+        Tone.getTransport().stop();
+        return;
+    }
+  }, [playState]);
   return (
     <Container>
       <GroupContainer>

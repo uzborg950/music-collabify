@@ -1,9 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
+export type PlayStates = "playing" | "paused" | "stopped" | "recording";
+type RecordState = {
+  startBeat: number;
+  layerIndex: number;
+};
 type PlaybackState = {
   currentBeat: number;
   seekedBeat: number; //redundant but needed to force stop requestAnimationFrame
-  isPlaying: boolean;
+  isPlaying: boolean; //@deprecated
+  recordState?: RecordState;
+  playState: PlayStates;
   subdivisionsPerBeat: number;
   nBeats: number; //columns
   nLayers: number; //rows
@@ -15,6 +21,7 @@ const initialState: PlaybackState = {
   currentBeat: 0,
   seekedBeat: 0,
   isPlaying: false,
+  playState: "stopped",
   subdivisionsPerBeat: 16,
   nBeats: 200,
   nLayers: 20,
@@ -27,12 +34,38 @@ const playbackSlice = createSlice({
   reducers: {
     onPlayClicked: (state) => {
       state.isPlaying = !state.isPlaying;
+      switch (state.playState) {
+        case "playing":
+          state.playState = "paused";
+          return;
+        default:
+          state.playState = "playing";
+          return;
+      }
+    },
+    onRecordSaved: (state) => {
+      state.recordState = undefined;
+    },
+    onRecordClicked: (state, action: PayloadAction<{ layerIndex: number }>) => {
+      state.playState = "recording";
+      state.isPlaying = true;
+      state.recordState = { ...action.payload, startBeat: state.currentBeat };
     },
     onStopClicked: (state) => {
       if (!state.isPlaying) {
         state.currentBeat = 0;
       } else {
         state.isPlaying = false;
+      }
+
+      switch (state.playState) {
+        case "playing":
+          state.playState = "paused";
+          return;
+        default:
+          state.playState = "stopped";
+          state.currentBeat = 0;
+          return;
       }
     },
     seekTimeline: (state, action: PayloadAction<number>) => {
@@ -77,9 +110,11 @@ export const {
   onPlayClicked,
   onStopClicked,
   seekTimeline,
+  onRecordClicked,
   increaseCurrentBeat,
   resetCurrentBeat,
   setCurrentBeat,
+  onRecordSaved,
   setNumBeats,
 } = playbackSlice.actions;
 export default playbackSlice.reducer;

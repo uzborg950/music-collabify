@@ -5,18 +5,17 @@ import React from "react";
 
 export const onClick =
   ({
-    trackGridLeft,
     dispatch,
     subdivisions,
   }: {
-    trackGridLeft?: number;
     subdivisions: number;
     dispatch: AppDispatch;
   }) =>
   (event: React.MouseEvent) => {
-    if (!trackGridLeft) return;
-
-    const beatIndex = (event.clientX - trackGridLeft) / getBeatWidth();
+    const trackGrid = event.target as HTMLElement;
+    const trackLeft = trackGrid.getBoundingClientRect();
+    if (!trackLeft) return;
+    const beatIndex = (event.clientX - trackLeft.left) / getBeatWidth();
 
     const subdivisionSize = 1 / subdivisions;
     const nearestSubDivision =

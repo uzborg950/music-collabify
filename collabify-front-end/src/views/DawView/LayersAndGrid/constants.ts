@@ -1,9 +1,9 @@
 export const BEAT_WIDTH = "50px";
 export const LAYERS_WIDTH = "400px";
+export const LAYER_HEIGHT = "120px";
 
 export const TOP_ROW_HEIGHT = "30px";
-export const getBeatWidth = () =>
-  parseInt(BEAT_WIDTH.slice(0, -2));
+export const getBeatWidth = () => parseInt(BEAT_WIDTH.slice(0, -2));
 
 export const getLayersWidth = () => parseInt(LAYERS_WIDTH.slice(0, -2));
 

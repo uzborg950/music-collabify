@@ -15,6 +15,7 @@
     "@types/node": "^16.18.84",
     "@types/react": "^18.2.60",
     "@types/react-dom": "^18.2.19",
+    "@types/uuid": "^10.0.0",
     "@wavesurfer/react": "^1.0.4",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
@@ -24,7 +25,9 @@
     "react-router": "^6.22.2",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.8",
+    "tone": "^15.0.4",
     "typescript": "^4.9.5",
+    "uuid": "^10.0.0",
     "wavesurfer.js": "^7.7.7",
     "web-vitals": "^2.1.4",
     "webpack-node-externals": "^3.0.0"

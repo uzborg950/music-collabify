@@ -1,4 +1,4 @@
-import { styled } from "@mui/system";
+import { css, styled } from "@mui/system";
 import { blueGrey } from "@mui/material/colors";
 import {
   Button,
@@ -23,7 +23,9 @@ export const ControlButtonIconContainer = styled(IconButton)`
     0 2px 4px 0 rgba(0, 0, 0, 0.19);
 `;
 
-export const ControlButtonBaseContainer = styled(ButtonBase)`
+export const ControlButtonBaseContainer = styled(ButtonBase)<{
+  $disabled?: boolean;
+}>`
   display: flex;
 
   width: 24px;
@@ -32,6 +34,14 @@ export const ControlButtonBaseContainer = styled(ButtonBase)`
   justify-content: center;
   background: ${blueGrey["900"]};
   border-radius: 5px;
+
+  ${({ $disabled }) =>
+    $disabled
+      ? css`
+          pointer-events: none;
+          opacity: 0.7;
+        `
+      : null}
 
   box-shadow:
     0 4px 2px 0 rgba(0, 0, 0, 0.2),

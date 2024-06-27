@@ -1,6 +1,6 @@
-import express from 'express';
+import express from "express";
 
-import routes from './routes';
+import routes from "../routes";
 
 class App {
   public server;
@@ -21,4 +21,9 @@ class App {
   }
 }
 
-export default new App().server;
+const app = new App().server;
+app.listen(process.env.SERVER_PORT, () =>
+  console.log(`server is running on port ${process.env.SERVER_PORT}...`),
+);
+
+export default app;

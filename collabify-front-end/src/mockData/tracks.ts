@@ -1,21 +1,25 @@
-import { TrackFileData } from "../views/DawView/types/trackTypes";
+// import { TrackFileData } from "../views/DawView/types/trackTypes";
 
-export const LOCAL_TRACKS_DATA: TrackFileData[] = [
+import { TrackData } from "../redux/playlist/types";
+
+export const LOCAL_TRACKS_DATA: TrackData[] = [
   {
-    type: "file",
+    id: "drums-mock-id",
+    // type: "file",
     startBeat: 0,
     // endBeat: 288,
-    length: 204,
+    lengthSeconds: 204,
     title: "drums",
     bgColor: "#3d3338",
     audioUri: "http://localhost:8080/drums.mp3",
     layerIndex: 0,
   },
   {
-    type: "file",
+    id: "vocals-mock-id",
+    // type: "file",
     startBeat: 0,
     // endBeat: 288,
-    length: 204,
+    lengthSeconds: 204,
 
     title: "vocals",
     bgColor: "#de3f3f",
@@ -23,10 +27,11 @@ export const LOCAL_TRACKS_DATA: TrackFileData[] = [
     layerIndex: 1,
   },
   {
-    type: "file",
+    id: "instrumental-mock-id",
+    // type: "file",
     startBeat: 0,
     // endBeat: 288,
-    length: 204,
+    lengthSeconds: 204,
 
     title: "instrumental",
     bgColor: "#f5bf44",
@@ -34,10 +39,11 @@ export const LOCAL_TRACKS_DATA: TrackFileData[] = [
     layerIndex: 2,
   },
   {
-    type: "file",
+    id: "bass-mock-id",
+    // type: "file",
     startBeat: 0,
     // endBeat: 288,
-    length: 204,
+    lengthSeconds: 204,
 
     title: "bass",
     bgColor: "#6910aa",

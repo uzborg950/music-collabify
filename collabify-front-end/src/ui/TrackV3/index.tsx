@@ -28,6 +28,7 @@ const GridCellContainer = styled("div")<{
   //pointer-events: none; //so that pointer events can pass through to playlist grid (and disable native wavesurfer pointer events)
   &:hover {
     opacity: 0.7;
+    cursor: pointer;
   }
 `;
 const WaveformContainer = styled("div")`

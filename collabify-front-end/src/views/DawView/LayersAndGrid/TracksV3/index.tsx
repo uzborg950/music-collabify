@@ -40,8 +40,7 @@ const RenderTrack: React.FC<RenderTrackProps> = (props) => {
     <TrackV3
       trackData={trackPresentationData}
       onContextMenu={(mouseEvent) => {
-        mouseEvent.nativeEvent.stopImmediatePropagation();
-        mouseEvent.stopPropagation();
+        mouseEvent.preventDefault();
         console.log(`right click event`, mouseEvent);
         dispatch(
           playlistSlice.actions.onTrackRemoved(trackPresentationData.id),
